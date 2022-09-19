@@ -1,14 +1,18 @@
 package com.softavail.common.exception;
 
+import com.softavail.common.enums.VehicleStatusErrorCode;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@AllArgsConstructor
-public enum VehicleStatusException {
+@Getter
+public class VehicleStatusException extends Exception {
 
-    VIN_NOT_FOUND(100000L,"vin_number={vin} not found");
-
-    private final Long errorCode;
-    private final String errorMessage;
-
+    private final VehicleStatusErrorCode errorCode;
+    private final String errorDescription;
+    public VehicleStatusException(VehicleStatusErrorCode errorCode, String errorDescription) {
+        super(errorDescription);
+        this.errorCode = errorCode;
+        this.errorDescription = errorDescription;
+    }
 
 }

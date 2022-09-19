@@ -1,12 +1,17 @@
 package com.softavail.common.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum MaintenanceType {
+    @JsonProperty("Very_Low")
     VERY_LOW("Very_Low","poor"),
+    @JsonProperty("Low")
     LOW("Low", "poor"),
+    @JsonProperty("Medium")
     MEDIUM("Medium", "average"),
+    @JsonProperty("High")
     HIGH("High", "high");
 
     private String name;

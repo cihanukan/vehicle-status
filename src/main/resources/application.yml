@@ -15,10 +15,10 @@ micronaut:
 clients:
   vehicleStatus: http://localhost:8889
 
+
 tracing:
   zipkin:
     enabled: true
-  jaeger:
-    enabled: true
+    traceId128Bit: true
     sampler:
       probability: 1
