@@ -1,8 +1,8 @@
 package com.softavail.service;
 
+import com.softavail.common.enums.Feature;
 import com.softavail.common.enums.MaintenanceType;
 import com.softavail.common.exception.VehicleStatusServerErrorException;
-import com.softavail.common.exception.VehicleStatusServiceUnavailableException;
 import com.softavail.common.exception.VinNumberNotFoundException;
 import com.softavail.dto.InsuranceReportResponse;
 import com.softavail.dto.MaintenanceResponse;
@@ -10,6 +10,7 @@ import com.softavail.dto.VehicleStatusRequest;
 import com.softavail.dto.VehicleStatusResponse;
 import com.softavail.service.client.InsuranceClient;
 import com.softavail.service.client.MaintenanceClient;
+import io.opentracing.Tracer;
 import jakarta.inject.Singleton;
 
 import lombok.RequiredArgsConstructor;
@@ -24,16 +25,19 @@ public class VehicleStatusService {
 
     private final InsuranceClient insuranceClient;
     private final MaintenanceClient maintenanceClient;
+
+    private final Tracer tracer;
     public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServerErrorException {
-        List<String> features = vehicleStatusRequest.getFeatures();
+        List<Feature> features = vehicleStatusRequest.getFeatures();
         InsuranceReportResponse reportResponse = null;
 
+        log.debug(tracer.activeSpan().context().toTraceId());
         VehicleStatusResponse vehicleStatusResponse = new VehicleStatusResponse();
-        if (features.contains("accident_free")) {
+        if (features.contains(Feature.ACCIDENT_FREE))
             reportResponse = insuranceClient.getInsuranceReport(vehicleStatusRequest.getVin());
-        }
+
         MaintenanceResponse maintenanceResponse= null;
-        if (features.contains("maintenance")){
+        if (features.contains(Feature.MAINTENANCE)){
             maintenanceResponse = maintenanceClient.getMaintenanceInfo(vehicleStatusRequest.getVin());
         }
 

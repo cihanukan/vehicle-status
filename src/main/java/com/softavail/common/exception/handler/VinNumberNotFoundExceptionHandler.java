@@ -25,7 +25,6 @@ public class VinNumberNotFoundExceptionHandler implements ExceptionHandler<VinNu
     public HttpResponse handle(HttpRequest request, VinNumberNotFoundException exception) {
         logger.debug("Caught exception", exception);
         final ExceptionDTO exceptionDTO = new ExceptionDTO();
-        exceptionDTO.setErrorName(VehicleStatusErrorCode.VIN_NOT_FOUND.name());
         exceptionDTO.setErrorCode(VehicleStatusErrorCode.VIN_NOT_FOUND.toString());
         exceptionDTO.setErrorDescription(exception.getMessage());
 

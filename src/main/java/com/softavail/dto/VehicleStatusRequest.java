@@ -1,9 +1,13 @@
 package com.softavail.dto;
 
+import com.softavail.common.enums.Feature;
+import com.softavail.common.enums.MaintenanceType;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.validation.Validated;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ public class VehicleStatusRequest {
     private String vin;
 
     @NotEmpty(message = "Possible values: \"accident_free\", \"maintenance\". At least one feature must be provided")
-    private ArrayList<String> features;
+    private ArrayList<Feature> features;
 
 }
+

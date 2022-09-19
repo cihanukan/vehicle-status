@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class ExceptionDTO {
 
-    private String errorName;
     private String errorCode;
     private String errorDescription;
 

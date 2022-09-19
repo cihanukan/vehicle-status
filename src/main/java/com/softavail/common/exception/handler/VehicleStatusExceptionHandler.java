@@ -26,7 +26,6 @@ public class VehicleStatusExceptionHandler implements ExceptionHandler<VehicleSt
 
         HttpStatus httpStatus = getHttpStatus(exception.getErrorCode());
         ExceptionDTO exceptionDTO =  new ExceptionDTO();
-        exceptionDTO.setErrorName(exception.getErrorCode().name());
         exceptionDTO.setErrorCode(exception.getErrorCode().toString());
         exceptionDTO.setErrorDescription(exception.getErrorDescription());
 

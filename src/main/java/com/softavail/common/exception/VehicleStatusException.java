@@ -10,7 +10,7 @@ public class VehicleStatusException extends Exception {
     private final VehicleStatusErrorCode errorCode;
     private final String errorDescription;
     public VehicleStatusException(VehicleStatusErrorCode errorCode, String errorDescription) {
-        super(errorCode.name() + ":" + errorDescription);
+        super(errorDescription);
         this.errorCode = errorCode;
         this.errorDescription = errorDescription;
     }
