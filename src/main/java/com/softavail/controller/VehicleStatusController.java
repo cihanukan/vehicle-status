@@ -1,12 +1,10 @@
 package com.softavail.controller;
 
 import com.softavail.common.exception.VehicleStatusServerErrorException;
-import com.softavail.common.exception.VehicleStatusServiceUnavailableException;
 import com.softavail.common.exception.VinNumberNotFoundException;
 import com.softavail.dto.VehicleStatusRequest;
 import com.softavail.dto.VehicleStatusResponse;
 import com.softavail.service.VehicleStatusService;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
