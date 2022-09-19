@@ -1,6 +1,6 @@
 package com.softavail.controller;
 
-import com.softavail.common.exception.VehicleStatusServerErrorException;
+import com.softavail.common.exception.VehicleStatusServiceUnavailableErrorException;
 import com.softavail.common.exception.VinNumberNotFoundException;
 import com.softavail.dto.VehicleStatusRequest;
 import com.softavail.dto.VehicleStatusResponse;
@@ -22,7 +22,7 @@ public class VehicleStatusController {
 
     @Operation(description = "Get Vehicle Status")
     @Post(uri = "/")
-    public HttpResponse<VehicleStatusResponse> getVehicleStatus(@Valid @Body VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServerErrorException {
+    public HttpResponse<VehicleStatusResponse> getVehicleStatus(@Valid @Body VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException {
         return HttpResponse.ok(vehicleStatusService.getVehicleStatus(vehicleStatusRequest));
     }
 }
