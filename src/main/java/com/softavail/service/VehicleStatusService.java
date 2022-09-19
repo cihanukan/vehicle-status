@@ -1,6 +1,8 @@
 package com.softavail.service;
 
 import com.softavail.common.enums.MaintenanceType;
+import com.softavail.common.exception.VehicleStatusServerErrorException;
+import com.softavail.common.exception.VehicleStatusServiceUnavailableException;
 import com.softavail.common.exception.VinNumberNotFoundException;
 import com.softavail.dto.InsuranceReportResponse;
 import com.softavail.dto.MaintenanceResponse;
@@ -22,7 +24,7 @@ public class VehicleStatusService {
 
     private final InsuranceClient insuranceClient;
     private final MaintenanceClient maintenanceClient;
-    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) {
+    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServerErrorException {
         List<String> features = vehicleStatusRequest.getFeatures();
         InsuranceReportResponse reportResponse = null;
 
