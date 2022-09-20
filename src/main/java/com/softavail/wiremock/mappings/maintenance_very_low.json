@@ -1,0 +1,13 @@
+{
+    "request":{
+        "method":"GET",
+        "url": "/cars/4Y1SL65848Z411438" 
+    },
+    "response":{
+        "status" :200,
+        "headers" : {
+            "Content-Type" : "application/json"
+          },
+        "bodyFileName" : "../__files/maintenance_response_very_low.json"
+    }
+}
