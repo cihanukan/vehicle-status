@@ -26,27 +26,33 @@ public class VehicleStatusService {
     private final InsuranceClient insuranceClient;
     private final MaintenanceClient maintenanceClient;
 
-    private final Tracer tracer;
-    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException {
+    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServerErrorException {
         List<Feature> features = vehicleStatusRequest.getFeatures();
         InsuranceReportResponse reportResponse = null;
+        MaintenanceResponse maintenanceResponse= null;
 
-        log.debug(tracer.activeSpan().context().toTraceId());
         VehicleStatusResponse vehicleStatusResponse = new VehicleStatusResponse();
+
+        //Api call for insurance client if feature contain "accident_free" property
         if (features.contains(Feature.ACCIDENT_FREE))
             reportResponse = getInsuranceReport(vehicleStatusRequest.getVin());
 
         MaintenanceResponse maintenanceResponse = null;
+        //Api call for maintenance client if feature contain "maintenance" property
         if (features.contains(Feature.MAINTENANCE)){
             maintenanceResponse = getMaintenanceInfo(vehicleStatusRequest.getVin());
         }
 
         vehicleStatusResponse.setVin(vehicleStatusRequest.getVin());
 
-        if (reportResponse == null) throw new VinNumberNotFoundException();
+        if (reportResponse == null)
+            throw new VinNumberNotFoundException();
+        else
+            vehicleStatusResponse.setAccidentFree(reportResponse.getReport().getClaims() == 0);
 
-        vehicleStatusResponse.setAccidentFree(reportResponse.getReport().getClaims() == 0);
-        if(maintenanceResponse != null){
+        if(maintenanceResponse == null)
+            throw new VinNumberNotFoundException();
+        else{
             String maintenanceScore = MaintenanceType.getEnumByString(maintenanceResponse.getMaintenanceFrequency());
             vehicleStatusResponse.setMaintenanceScore(maintenanceScore);
         }
