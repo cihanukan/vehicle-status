@@ -3,7 +3,7 @@
 
 <!-- Logging Properties -->
 <Properties>
-    <Property name="LOG_PATTERN">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} traceId: %X{trace_id} spanId: %X{span_id} - %msg%n</Property>
+    <Property name="LOG_PATTERN">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} %X{RequestId} - %msg%n</Property>
     <Property name="APP_LOG_ROOT">c:/temp/logs</Property>
 </Properties>
 

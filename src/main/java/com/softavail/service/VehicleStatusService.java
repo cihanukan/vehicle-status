@@ -11,7 +11,7 @@ import com.softavail.dto.VehicleStatusResponse;
 import com.softavail.service.client.InsuranceClient;
 import com.softavail.service.client.MaintenanceClient;
 import jakarta.inject.Singleton;
-
+import org.apache.log4j.MDC;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,7 @@ public class VehicleStatusService {
     private final InsuranceClient insuranceClient;
     private final MaintenanceClient maintenanceClient;
 
-    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException {
+    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException, InterruptedException {
         List<Feature> features = vehicleStatusRequest.getFeatures();
         InsuranceReportResponse reportResponse = null;
         MaintenanceResponse maintenanceResponse= null;
@@ -33,27 +33,26 @@ public class VehicleStatusService {
         VehicleStatusResponse vehicleStatusResponse = new VehicleStatusResponse();
 
         //Api call for insurance client if feature contain "accident_free" property
-        if (features.contains(Feature.ACCIDENT_FREE))
+        if (features.contains(Feature.ACCIDENT_FREE)){
             reportResponse = getInsuranceReport(vehicleStatusRequest.getVin());
+            if (reportResponse == null)
+                throw new VinNumberNotFoundException();
+            else
+                vehicleStatusResponse.setAccidentFree(reportResponse.getReport().getClaims() == 0);
+        }
 
         //Api call for maintenance client if feature contain "maintenance" property
         if (features.contains(Feature.MAINTENANCE)){
             maintenanceResponse = getMaintenanceInfo(vehicleStatusRequest.getVin());
+            if(maintenanceResponse == null)
+                throw new VinNumberNotFoundException();
+            else{
+                String maintenanceScore = MaintenanceType.getEnumByString(maintenanceResponse.getMaintenanceFrequency());
+                vehicleStatusResponse.setMaintenanceScore(maintenanceScore);
+            }
         }
-
+        vehicleStatusResponse.setRequestId((String) MDC.get("RequestId"));
         vehicleStatusResponse.setVin(vehicleStatusRequest.getVin());
-
-        if (reportResponse == null)
-            throw new VinNumberNotFoundException();
-        else
-            vehicleStatusResponse.setAccidentFree(reportResponse.getReport().getClaims() == 0);
-
-        if(maintenanceResponse == null)
-            throw new VinNumberNotFoundException();
-        else{
-            String maintenanceScore = MaintenanceType.getEnumByString(maintenanceResponse.getMaintenanceFrequency());
-            vehicleStatusResponse.setMaintenanceScore(maintenanceScore);
-        }
 
         return vehicleStatusResponse;
     }

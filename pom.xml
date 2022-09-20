@@ -18,7 +18,7 @@
         <jdk.version>11</jdk.version>
         <release.version>11</release.version>
         <micronaut.version>3.6.3</micronaut.version>
-        <micronaut.runtime>tomcat</micronaut.runtime>
+        <micronaut.runtime>netty</micronaut.runtime>
         <exec.mainClass>com.softavail.Application</exec.mainClass>
     </properties>
 
@@ -86,8 +86,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.servlet</groupId>
-            <artifactId>micronaut-http-server-tomcat</artifactId>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-http-server-netty</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -153,6 +153,11 @@
             <groupId>io.zipkin.reporter</groupId>
             <artifactId>zipkin-reporter</artifactId>
             <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>2.7</version>
         </dependency>
     </dependencies>
 
