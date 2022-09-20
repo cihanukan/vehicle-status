@@ -10,7 +10,6 @@ import com.softavail.dto.VehicleStatusRequest;
 import com.softavail.dto.VehicleStatusResponse;
 import com.softavail.service.client.InsuranceClient;
 import com.softavail.service.client.MaintenanceClient;
-import io.opentracing.Tracer;
 import jakarta.inject.Singleton;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ public class VehicleStatusService {
     private final InsuranceClient insuranceClient;
     private final MaintenanceClient maintenanceClient;
 
-    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServerErrorException {
+    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException {
         List<Feature> features = vehicleStatusRequest.getFeatures();
         InsuranceReportResponse reportResponse = null;
         MaintenanceResponse maintenanceResponse= null;
@@ -37,7 +36,6 @@ public class VehicleStatusService {
         if (features.contains(Feature.ACCIDENT_FREE))
             reportResponse = getInsuranceReport(vehicleStatusRequest.getVin());
 
-        MaintenanceResponse maintenanceResponse = null;
         //Api call for maintenance client if feature contain "maintenance" property
         if (features.contains(Feature.MAINTENANCE)){
             maintenanceResponse = getMaintenanceInfo(vehicleStatusRequest.getVin());
