@@ -1,48 +1,23 @@
-## Micronaut 3.6.3 Documentation
 
-- [User Guide](https://docs.micronaut.io/3.6.3/guide/index.html)
-- [API Reference](https://docs.micronaut.io/3.6.3/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/3.6.3/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
+# Running WireMock Standalone
 
----
+Wiremock standalone server is used for external API calls in this project.
 
-## Feature swagger-ui documentation
-
-- [Micronaut Swagger UI documentation](https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html)
-
-- [https://swagger.io/tools/swagger-ui/](https://swagger.io/tools/swagger-ui/)
-
-## Feature hamcrest documentation
-
-- [https://hamcrest.org/JavaHamcrest/](https://hamcrest.org/JavaHamcrest/)
-
-## Feature tomcat-server documentation
-
-- [Micronaut Tomcat Server documentation](https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#tomcat)
-
-## Feature http-client documentation
-
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
-
-## Feature openapi documentation
-
-- [Micronaut OpenAPI Support documentation](https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html)
-
-- [https://www.openapis.org](https://www.openapis.org)
-
-## Feature lombok documentation
-
-- [Micronaut Project Lombok documentation](https://docs.micronaut.io/latest/guide/index.html#lombok)
-
-- [https://projectlombok.org/features/all](https://projectlombok.org/features/all)
-
-## Feature mockito documentation
-
-- [https://site.mockito.org](https://site.mockito.org)
-
-## Feature reactor documentation
-
-- [Micronaut Reactor documentation](https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html)
+#### To boot the Wiremock server, go to wiremock directory and simply run the following command from the terminal
 
 
+Go to wiremock directory in the project
+
+```bash
+  cd src/main/java/com/softavail/wiremock/
+```
+
+Run the command below in terminal
+
+```bash
+  java -jar wiremock-jre8-standalone-2.34.0.jar --port=8889 --verbose
+```
+
+With this way wiremock will be ready to receive request from port 8889
+
+  

@@ -21,6 +21,8 @@ public class VehicleStatusRequest {
     @NotEmpty(message = "VIN number cannot be empty")
     private String vin;
 
+    //Enum used for possible values. If feature not exist in enum definition then throw exception
+    //Tried to put custom validator but micronaut did not invoke when request received
     @NotEmpty(message = "Possible values: \"accident_free\", \"maintenance\". At least one feature must be provided")
     private ArrayList<Feature> features;
 
