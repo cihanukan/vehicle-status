@@ -2,7 +2,7 @@ package com.softavail.service;
 
 import com.softavail.common.enums.Feature;
 import com.softavail.common.enums.MaintenanceType;
-import com.softavail.common.exception.VehicleStatusServerErrorException;
+import com.softavail.common.exception.VehicleStatusServiceUnavailableErrorException;
 import com.softavail.common.exception.VinNumberNotFoundException;
 import com.softavail.dto.InsuranceReportResponse;
 import com.softavail.dto.MaintenanceResponse;
@@ -10,7 +10,6 @@ import com.softavail.dto.VehicleStatusRequest;
 import com.softavail.dto.VehicleStatusResponse;
 import com.softavail.service.client.InsuranceClient;
 import com.softavail.service.client.MaintenanceClient;
-import io.opentracing.Tracer;
 import jakarta.inject.Singleton;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ public class VehicleStatusService {
     private final InsuranceClient insuranceClient;
     private final MaintenanceClient maintenanceClient;
 
-    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServerErrorException {
+    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException {
         List<Feature> features = vehicleStatusRequest.getFeatures();
         InsuranceReportResponse reportResponse = null;
         MaintenanceResponse maintenanceResponse= null;
@@ -35,11 +34,11 @@ public class VehicleStatusService {
 
         //Api call for insurance client if feature contain "accident_free" property
         if (features.contains(Feature.ACCIDENT_FREE))
-            reportResponse = insuranceClient.getInsuranceReport(vehicleStatusRequest.getVin());
+            reportResponse = getInsuranceReport(vehicleStatusRequest.getVin());
 
         //Api call for maintenance client if feature contain "maintenance" property
         if (features.contains(Feature.MAINTENANCE)){
-            maintenanceResponse = maintenanceClient.getMaintenanceInfo(vehicleStatusRequest.getVin());
+            maintenanceResponse = getMaintenanceInfo(vehicleStatusRequest.getVin());
         }
 
         vehicleStatusResponse.setVin(vehicleStatusRequest.getVin());
@@ -57,6 +56,28 @@ public class VehicleStatusService {
         }
 
         return vehicleStatusResponse;
+    }
+
+    private InsuranceReportResponse getInsuranceReport(String vin) throws VehicleStatusServiceUnavailableErrorException {
+        InsuranceReportResponse reportResponse;
+        try {
+            reportResponse = insuranceClient.getInsuranceReport(vin);
+        }
+        catch (Exception e){
+            throw new VehicleStatusServiceUnavailableErrorException("Insurance service call error");
+        }
+        return reportResponse;
+    }
+
+    private MaintenanceResponse getMaintenanceInfo (String vin) throws VehicleStatusServiceUnavailableErrorException {
+        MaintenanceResponse maintenanceResponse;
+        try {
+            maintenanceResponse = maintenanceClient.getMaintenanceInfo(vin);
+        }
+        catch (Exception e){
+            throw new VehicleStatusServiceUnavailableErrorException("Maintenance service call error");
+        }
+        return maintenanceResponse;
     }
 
 }

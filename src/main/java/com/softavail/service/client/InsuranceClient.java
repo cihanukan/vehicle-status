@@ -13,7 +13,7 @@ import io.micronaut.retry.annotation.Retryable;
  * Maintenance client call => http://localhost:8888/cars/{vinNumber}
  *  ***/
 @Client(value = "${clients.vehicleStatus}")
-@Retryable(delay = "2s", attempts = "3")
+@Retryable(delay = "s", attempts = "3")
 public interface InsuranceClient {
 
     @Get("/accidents/report{?vin}")
