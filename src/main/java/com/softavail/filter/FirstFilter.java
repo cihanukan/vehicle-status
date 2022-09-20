@@ -11,10 +11,6 @@ import org.reactivestreams.Publisher;
 
 import java.util.UUID;
 
-/**
- * @author Graeme Rocher
- * @since 1.0
- */
 @Filter(Filter.MATCH_ALL_PATTERN)
 public class FirstFilter implements HttpFilter {
 
