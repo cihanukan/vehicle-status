@@ -3,7 +3,7 @@
 
 Wiremock standalone server is used for external API calls in this project.
 
-#### To boot the Wiremock server, go to wiremock directory and simply run the following command from the terminal
+#### To start the Wiremock server, go to wiremock directory and simply run the following command from the terminal
 
 
 Go to wiremock directory in the project
