@@ -55,7 +55,7 @@
 
 <Loggers>
 
-    <Logger name="com.softavail.controller" additivity="false" level="debug">
+    <Logger name="com.softavail" additivity="false" level="debug">
         <AppenderRef ref="traceLog" />
         <AppenderRef ref="debugLog" />
         <AppenderRef ref="infoLog"  />
