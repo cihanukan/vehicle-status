@@ -1,5 +1,6 @@
 package com.softavail.filter;
 
+import com.softavail.constant.ApplicationConstant;
 import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -23,7 +24,7 @@ public class FirstFilter implements HttpFilter {
   public Publisher<? extends HttpResponse<?>> doFilter(HttpRequest<?> request, FilterChain chain) {
 
     String requestId = String.valueOf(UUID.randomUUID());
-    MDC.put("RequestId", requestId);
+    MDC.put(ApplicationConstant.REQUEST_ID, requestId);
 
     Publisher<? extends HttpResponse<?>> publisher = chain.proceed(request);
 

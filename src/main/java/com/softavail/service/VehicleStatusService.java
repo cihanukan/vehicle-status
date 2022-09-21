@@ -4,6 +4,7 @@ import com.softavail.common.enums.Feature;
 import com.softavail.common.enums.MaintenanceType;
 import com.softavail.common.exception.VehicleStatusServiceUnavailableErrorException;
 import com.softavail.common.exception.VinNumberNotFoundException;
+import com.softavail.constant.ApplicationConstant;
 import com.softavail.dto.InsuranceReportResponse;
 import com.softavail.dto.MaintenanceResponse;
 import com.softavail.dto.VehicleStatusRequest;
@@ -51,7 +52,7 @@ public class VehicleStatusService {
                 vehicleStatusResponse.setMaintenanceScore(maintenanceScore);
             }
         }
-        vehicleStatusResponse.setRequestId((String) MDC.get("RequestId"));
+        vehicleStatusResponse.setRequestId((String) MDC.get(ApplicationConstant.REQUEST_ID));
         vehicleStatusResponse.setVin(vehicleStatusRequest.getVin());
 
         return vehicleStatusResponse;
@@ -63,7 +64,7 @@ public class VehicleStatusService {
             reportResponse = insuranceClient.getInsuranceReport(vin);
         }
         catch (Exception e){
-            throw new VehicleStatusServiceUnavailableErrorException("Insurance service call error");
+            throw new VehicleStatusServiceUnavailableErrorException(ApplicationConstant.INSURANCE_CALL_ERROR);
         }
         return reportResponse;
     }
@@ -74,7 +75,7 @@ public class VehicleStatusService {
             maintenanceResponse = maintenanceClient.getMaintenanceInfo(vin);
         }
         catch (Exception e){
-            throw new VehicleStatusServiceUnavailableErrorException("Maintenance service call error");
+            throw new VehicleStatusServiceUnavailableErrorException(ApplicationConstant.MAINTENANCE_CALL_ERROR);
         }
         return maintenanceResponse;
     }
