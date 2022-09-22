@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\r\n\t    \"vin\": \"4Y1SL65848Z411439\", \r\n\t    \"features\": [\"accident_free\"]\r\n    }",
+					"raw": "    {\r\n\t    \"vin\": \"4Y1SL65848Z411441\", \r\n\t    \"features\": [\"accident_free\", \"maintenance\"]\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -39,7 +39,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8889/accidents/reports",
+					"raw": "http://localhost:8889/accidents/report?vin={{vin}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -47,7 +47,13 @@
 					"port": "8889",
 					"path": [
 						"accidents",
-						"reports"
+						"report"
+					],
+					"query": [
+						{
+							"key": "vin",
+							"value": "{{vin}}"
+						}
 					]
 				}
 			},
@@ -59,19 +65,50 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8889/accidents/reports",
+					"raw": "http://localhost:8889/cars/{{vin}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8889",
 					"path": [
-						"accidents",
-						"reports"
+						"cars",
+						"{{vin}}"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "vin",
+			"value": "4Y1SL65848Z411439",
+			"type": "string"
+		},
+		{
+			"value": "",
+			"type": "string"
 		}
 	]
 }
