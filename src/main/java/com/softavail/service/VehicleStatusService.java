@@ -26,7 +26,7 @@ public class VehicleStatusService {
     private final InsuranceClient insuranceClient;
     private final MaintenanceClient maintenanceClient;
 
-    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException, InterruptedException {
+    public VehicleStatusResponse getVehicleStatus(VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException {
         List<Feature> features = vehicleStatusRequest.getFeatures();
         InsuranceReportResponse reportResponse = null;
         MaintenanceResponse maintenanceResponse= null;

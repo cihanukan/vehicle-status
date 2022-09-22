@@ -17,7 +17,7 @@ public class VehicleStatusController {
     private final VehicleStatusService vehicleStatusService;
     @Operation(description = "Get Vehicle Status")
     @Post(uri = "/")
-    public HttpResponse<VehicleStatusResponse> getVehicleStatus(@Valid @Body VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException, InterruptedException {
+    public HttpResponse<VehicleStatusResponse> getVehicleStatus(@Valid @Body VehicleStatusRequest vehicleStatusRequest) throws VinNumberNotFoundException, VehicleStatusServiceUnavailableErrorException {
         return HttpResponse.ok(vehicleStatusService.getVehicleStatus(vehicleStatusRequest));
     }
 }

@@ -35,7 +35,6 @@ public class VehicleStatusExceptionHandler implements ExceptionHandler<VehicleSt
     private HttpStatus getHttpStatus(VehicleStatusErrorCode errorCode){
          switch (errorCode) {
              case VIN_NOT_FOUND: return HttpStatus.NOT_FOUND;
-             case SERVER_ERROR: return  HttpStatus.INTERNAL_SERVER_ERROR;
              case SERVICE_UNAVAILABLE: return HttpStatus.SERVICE_UNAVAILABLE;
         };
         return null;
