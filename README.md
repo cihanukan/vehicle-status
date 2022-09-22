@@ -20,4 +20,11 @@ Run the command below in terminal
 
 With this way wiremock will be ready to receive request from port 8889
 
+You can get the postman collections under postman directory
+
+Go to postman directory in the project
+
+```bash
+  cd src/main/java/com/softavail/postman/
+```
   
