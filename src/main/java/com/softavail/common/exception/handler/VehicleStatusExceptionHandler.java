@@ -22,7 +22,7 @@ public class VehicleStatusExceptionHandler implements ExceptionHandler<VehicleSt
 
     @Override
     public HttpResponse<ExceptionDTO> handle(HttpRequest request, VehicleStatusException exception) {
-        logger.debug("Error occured. Exception : ", exception);
+        logger.debug("Error occurred. Exception : ", exception);
 
         HttpStatus httpStatus = getHttpStatus(exception.getErrorCode());
         ExceptionDTO exceptionDTO =  new ExceptionDTO();
@@ -37,6 +37,6 @@ public class VehicleStatusExceptionHandler implements ExceptionHandler<VehicleSt
              case VIN_NOT_FOUND: return HttpStatus.NOT_FOUND;
              case SERVICE_UNAVAILABLE: return HttpStatus.SERVICE_UNAVAILABLE;
         };
-        return null;
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 }

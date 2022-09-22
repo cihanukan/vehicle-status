@@ -14,8 +14,8 @@ public enum MaintenanceType {
     @JsonProperty("High")
     HIGH("High", "high");
 
-    private String name;
-    private String score;
+    private final String name;
+    private final String score;
 
 
     public static String getEnumByString(String name){
