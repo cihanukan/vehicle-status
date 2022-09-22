@@ -28,7 +28,7 @@ class VehicleStatusServiceTest {
 
     @Test
     void testGetVehicleStatus()
-            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException, InterruptedException {
+            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException {
         VehicleStatusService vehicleStatusService = new VehicleStatusService(mock(InsuranceClient.class),
                 mock(MaintenanceClient.class));
 
@@ -42,14 +42,14 @@ class VehicleStatusServiceTest {
 
     @Test
     void testGetVehicleStatus2()
-            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException, InterruptedException {
+            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException {
         Report report = new Report();
         report.setClaims(3);
 
         InsuranceReportResponse insuranceReportResponse = new InsuranceReportResponse();
         insuranceReportResponse.setReport(report);
         InsuranceClient insuranceClient = mock(InsuranceClient.class);
-        when(insuranceClient.getInsuranceReport((String) any())).thenReturn(insuranceReportResponse);
+        when(insuranceClient.getInsuranceReport(any())).thenReturn(insuranceReportResponse);
         VehicleStatusService vehicleStatusService = new VehicleStatusService(insuranceClient,
                 mock(MaintenanceClient.class));
 
@@ -63,19 +63,19 @@ class VehicleStatusServiceTest {
         assertFalse(actualVehicleStatus.getAccidentFree());
         assertEquals("4Y1SL65848Z411439", actualVehicleStatus.getVin());
         assertNull(actualVehicleStatus.getRequestId());
-        verify(insuranceClient).getInsuranceReport((String) any());
+        verify(insuranceClient).getInsuranceReport(any());
     }
 
     @Test
     void testGetVehicleStatus3()
-            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException, InterruptedException {
+            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException {
         Report report = new Report();
         report.setClaims(0);
 
         InsuranceReportResponse insuranceReportResponse = new InsuranceReportResponse();
         insuranceReportResponse.setReport(report);
         InsuranceClient insuranceClient = mock(InsuranceClient.class);
-        when(insuranceClient.getInsuranceReport((String) any())).thenReturn(insuranceReportResponse);
+        when(insuranceClient.getInsuranceReport(any())).thenReturn(insuranceReportResponse);
         VehicleStatusService vehicleStatusService = new VehicleStatusService(insuranceClient,
                 mock(MaintenanceClient.class));
 
@@ -89,24 +89,24 @@ class VehicleStatusServiceTest {
         assertTrue(actualVehicleStatus.getAccidentFree());
         assertEquals("4Y1SL65848Z411439", actualVehicleStatus.getVin());
         assertNull(actualVehicleStatus.getRequestId());
-        verify(insuranceClient).getInsuranceReport((String) any());
+        verify(insuranceClient).getInsuranceReport(any());
     }
 
     @Test
     void testGetVehicleStatus4()
-            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException, InterruptedException {
+            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException {
         Report report = new Report();
         report.setClaims(3);
 
         InsuranceReportResponse insuranceReportResponse = new InsuranceReportResponse();
         insuranceReportResponse.setReport(report);
         InsuranceClient insuranceClient = mock(InsuranceClient.class);
-        when(insuranceClient.getInsuranceReport((String) any())).thenReturn(insuranceReportResponse);
+        when(insuranceClient.getInsuranceReport(any())).thenReturn(insuranceReportResponse);
 
         MaintenanceResponse maintenanceResponse = new MaintenanceResponse();
         maintenanceResponse.setMaintenanceFrequency("average");
         MaintenanceClient maintenanceClient = mock(MaintenanceClient.class);
-        when(maintenanceClient.getMaintenanceInfo((String) any())).thenReturn(maintenanceResponse);
+        when(maintenanceClient.getMaintenanceInfo(any())).thenReturn(maintenanceResponse);
         VehicleStatusService vehicleStatusService = new VehicleStatusService(insuranceClient, maintenanceClient);
 
         ArrayList<Feature> featureList = new ArrayList<>();
@@ -119,25 +119,25 @@ class VehicleStatusServiceTest {
         assertEquals("4Y1SL65848Z411439", actualVehicleStatus.getVin());
         assertNull(actualVehicleStatus.getRequestId());
         assertNull(actualVehicleStatus.getMaintenanceScore());
-        verify(maintenanceClient).getMaintenanceInfo((String) any());
+        verify(maintenanceClient).getMaintenanceInfo(any());
     }
 
 
     @Test
     void testGetVehicleStatus5()
-            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException, InterruptedException {
+            throws VehicleStatusServiceUnavailableErrorException, VinNumberNotFoundException {
         Report report = new Report();
         report.setClaims(1);
 
         InsuranceReportResponse insuranceReportResponse = new InsuranceReportResponse();
         insuranceReportResponse.setReport(report);
         InsuranceClient insuranceClient = mock(InsuranceClient.class);
-        when(insuranceClient.getInsuranceReport((String) any())).thenReturn(insuranceReportResponse);
+        when(insuranceClient.getInsuranceReport(any())).thenReturn(insuranceReportResponse);
 
         MaintenanceResponse maintenanceResponse = new MaintenanceResponse();
         maintenanceResponse.setMaintenanceFrequency("poor");
         MaintenanceClient maintenanceClient = mock(MaintenanceClient.class);
-        when(maintenanceClient.getMaintenanceInfo((String) any())).thenReturn(maintenanceResponse);
+        when(maintenanceClient.getMaintenanceInfo(any())).thenReturn(maintenanceResponse);
         VehicleStatusService vehicleStatusService = new VehicleStatusService(insuranceClient, maintenanceClient);
 
         ArrayList<Feature> featureList = new ArrayList<>();
@@ -150,7 +150,7 @@ class VehicleStatusServiceTest {
         assertEquals("4Y1SL65848Z411439", actualVehicleStatus.getVin());
         assertNull(actualVehicleStatus.getRequestId());
         assertNull(actualVehicleStatus.getMaintenanceScore());
-        verify(maintenanceClient).getMaintenanceInfo((String) any());
+        verify(maintenanceClient).getMaintenanceInfo(any());
     }
 }
 
